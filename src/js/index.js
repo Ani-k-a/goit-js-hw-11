@@ -16,7 +16,8 @@ const observer = new IntersectionObserver(async entries => {
   const cardsArr = document.querySelectorAll('.photo-card');
   const [entry] = entries;
 
-  if (!entry.isIntersecting || !cardsArr.length) return;
+  if (!entry.isIntersecting || !cardsArr.length) 
+  return;
 
   if (cardsArr.length >= totalHits) {
     Notiflix.Notify.info(
@@ -24,6 +25,7 @@ const observer = new IntersectionObserver(async entries => {
     );
     return;
   }
+
 
   const requestValue = searchFormEl.searchQuery.value;
   page += 1;
@@ -51,6 +53,11 @@ searchFormEl.addEventListener('submit', async event => {
   page = 1;
 
   const requestValue = event.currentTarget.searchQuery.value;
+
+  if (requestValue === '') {
+    Notiflix.Notify.failure('Erorr, input is empty.');
+    return;
+  }
 
   try {
     const response = await fetchImgsData(requestValue, page);
